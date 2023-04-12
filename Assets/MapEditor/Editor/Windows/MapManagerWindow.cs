@@ -5,6 +5,7 @@ using RustMapEditor.UI;
 using RustMapEditor.Variables;
 using UnityEditor.IMGUI.Controls;
 using System.Collections.Generic;
+using System;
 using static TerrainManager;
 
 public class MapManagerWindow : EditorWindow
@@ -83,6 +84,7 @@ public class MapManagerWindow : EditorWindow
 
 	public void OnEnable()
 	{
+
 		geoItem.emphasis = 1;
 		activePreset.biomeLayer = TerrainBiome.Enum.Arid;
 		breakerTree = new BreakerTreeView(breakerState);
@@ -94,7 +96,7 @@ public class MapManagerWindow : EditorWindow
 			(Texture2D)Resources.Load("Textures/Icons/stop"),
 			(Texture2D)Resources.Load("Textures/Icons/tarp"),
 			(Texture2D)Resources.Load("Textures/Icons/trash"));
-	
+
 	}
 	
    public void OnGUI()
@@ -170,7 +172,7 @@ public class MapManagerWindow : EditorWindow
 			{
 				Functions.SetLayer((LayerType)layerIndex, TerrainTopology.TypeToIndex((int)layers.Topologies));
 			}
-
+				
 				switch (TerrainManager.CurrentLayerType)
 				{
 					case LayerType.Ground:
@@ -227,6 +229,7 @@ public class MapManagerWindow : EditorWindow
 						Functions.LakeOcean(ref layers);
 						break;
 				}
+				
 			
             switch (mapToolsOptions)
             {

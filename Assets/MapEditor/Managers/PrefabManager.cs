@@ -22,6 +22,7 @@ public static class PrefabManager
     private static void OnProjectLoad()
     {
         DefaultPrefab = Resources.Load<GameObject>("Prefabs/DefaultPrefab");
+		
 		ElectricsParent = GameObject.FindGameObjectWithTag("Electrics").transform;
         NPCsParent = GameObject.FindGameObjectWithTag("NPC").transform;
 		PrefabParent = GameObject.FindGameObjectWithTag("Prefabs").transform;
@@ -52,6 +53,7 @@ public static class PrefabManager
     }
 
     public static GameObject DefaultPrefab { get; private set; }
+	
     public static Transform PrefabParent { get; private set; }
     public static GameObject PrefabToSpawn;
 
@@ -366,7 +368,9 @@ public static class PrefabManager
 	public static Colliders ItemToColliders(Transform item)
 	{
 		Colliders colliderScales = new Colliders();
-		
+	
+		try
+		{
 		if (item.TryGetComponent(typeof(SphereCollider), out Component comp))
 				{
 					SphereCollider collider = item.GetComponent(typeof(SphereCollider)) as SphereCollider;
@@ -378,7 +382,9 @@ public static class PrefabManager
 		if (item.TryGetComponent(typeof(BoxCollider), out Component compt))
 				{
 					BoxCollider collider = item.GetComponent(typeof(BoxCollider)) as BoxCollider;
-					colliderScales.box = collider.size;
+					colliderScales.box.x = collider.size.x;
+					colliderScales.box.y = collider.size.y;
+					colliderScales.box.z = collider.size.z;
 				}
 				
 		if (item.TryGetComponent(typeof(CapsuleCollider), out Component compy))
@@ -388,7 +394,12 @@ public static class PrefabManager
 					colliderScales.capsule.z = collider.radius*2f;
 					colliderScales.capsule.y = collider.height;
 				}
-				
+		
+		}
+		catch (Exception e)
+		{
+			Debug.LogError(e.Message);
+		}
 		return colliderScales;
 	}
 	
@@ -414,7 +425,7 @@ public static class PrefabManager
 	}
 	
 	
-	public static PrefabData ItemToPrefab(Transform item, string monumentName)
+	public static PrefabData ItemToPrefab(Transform item, string parentName, string monumentName)
 	{
 		var prefab = new PrefabData();
 		Vector3 scale = new Vector3();
@@ -424,8 +435,7 @@ public static class PrefabManager
 		
 		prefab.position = item.position;
 		prefab.rotation = item.eulerAngles;
-		//prefab.id = AssetManager.partialToID(item.name, monumentName);
-		
+		prefab.id = AssetManager.fragmentToID(item.name, parentName, monumentName);
 		
 		prefab.scale = scale;
 		
@@ -1095,77 +1105,85 @@ public static class PrefabManager
 		Transform categoryItem, childItem, grandchildItem, greatGrandchildItem,greatgreatGrandchildItem;
 		int idCount = 0;
 		
-		
-		for (int k = 0; k < prefabs.Length; k++)
-		{
-			if (prefabs[k] != null)
+		try
+        {
+			
+			for (int k = 0; k < prefabs.Length; k++)
 			{
-				fragments.monumentName = prefabs[k].name;
-	
-					for (int i = 0; i < prefabs[k].transform.childCount; i++)
-						{
-							categoryItem = prefabs[k].transform.GetChild(i);
-							breaking.name = categoryItem.name;
-							breaking.parent = fragments.monumentName;
-							breaking.treeID = idCount;
-							breaking.prefabData  = ItemToPrefab(categoryItem, fragments.monumentName);
-							breaking.colliderScales = ItemToColliders(categoryItem);
-							fragments.category.Add(new CategoryData(breaking));
-							idCount++;
-							
-							for (int j = 0; j < categoryItem.childCount; j++)
+				if (prefabs[k] != null)
+				{
+					fragments.monumentName = prefabs[k].name;
+		
+						for (int i = 0; i < prefabs[k].transform.childCount; i++)
 							{
-								
-								childItem = categoryItem.GetChild(j);
-								breaking.name = childItem.name;
-								breaking.parent = categoryItem.name;
+								categoryItem = prefabs[k].transform.GetChild(i);
+								breaking.name = categoryItem.name;
+								breaking.parent = fragments.monumentName;
 								breaking.treeID = idCount;
-								breaking.prefabData  = ItemToPrefab(childItem, fragments.monumentName);
-								breaking.colliderScales = ItemToColliders(childItem);
-								fragments.category[i].child.Add(new ChildrenData(breaking));
+								breaking.prefabData  = ItemToPrefab(categoryItem, breaking.parent, fragments.monumentName);
+								breaking.colliderScales = ItemToColliders(categoryItem);
+								fragments.category.Add(new CategoryData(breaking));
 								idCount++;
 								
-									for (int m = 0; m < childItem.childCount; m++)
-									{
-										grandchildItem = childItem.GetChild(m);
-										breaking.name = grandchildItem.name;
-										breaking.parent = childItem.name;
-										breaking.treeID = idCount;
-										breaking.prefabData  = ItemToPrefab(grandchildItem, fragments.monumentName);
-										breaking.colliderScales = ItemToColliders(grandchildItem);
-										fragments.category[i].child[j].grandchild.Add(new GrandchildrenData(breaking));
-										idCount++;
-										
-										for (int n = 0; n < grandchildItem.childCount; n++)
-											{
-												greatGrandchildItem = grandchildItem.GetChild(n);
-												breaking.name = greatGrandchildItem.name;
-												breaking.parent = grandchildItem.name;
-												breaking.treeID = idCount;
-												breaking.prefabData  = ItemToPrefab(greatGrandchildItem, fragments.monumentName);
-												breaking.colliderScales = ItemToColliders(greatGrandchildItem);
-												fragments.category[i].child[j].grandchild[m].greatgrandchild.Add(new GreatGrandchildrenData(breaking));
-												idCount++;
-
-												for (int o = 0; o < greatGrandchildItem.childCount; o++)
-												{
-													greatgreatGrandchildItem = greatGrandchildItem.GetChild(o);
-													breaking.name = greatgreatGrandchildItem.name;
-													breaking.parent = greatGrandchildItem.name;
-													breaking.treeID = idCount;
-													breaking.prefabData  = ItemToPrefab(greatgreatGrandchildItem, fragments.monumentName);
-													breaking.colliderScales = ItemToColliders(greatgreatGrandchildItem);
-													fragments.category[i].child[j].grandchild[m].greatgrandchild[n].greatgreatgrandchild.Add(new GreatGreatGrandchildrenData(breaking));
-													idCount++;
-												}
-											
-											}
-											
-									}
+								for (int j = 0; j < categoryItem.childCount; j++)
+								{
 									
+									childItem = categoryItem.GetChild(j);
+									breaking.name = childItem.name;
+									breaking.parent = categoryItem.name;
+									breaking.treeID = idCount;
+									breaking.prefabData  = ItemToPrefab(childItem, breaking.parent, fragments.monumentName);
+									breaking.colliderScales = ItemToColliders(childItem);
+									fragments.category[i].child.Add(new ChildrenData(breaking));
+									idCount++;
+									
+										for (int m = 0; m < childItem.childCount; m++)
+										{
+											grandchildItem = childItem.GetChild(m);
+											breaking.name = grandchildItem.name;
+											breaking.parent = childItem.name;
+											breaking.treeID = idCount;
+											breaking.prefabData  = ItemToPrefab(grandchildItem, breaking.parent, fragments.monumentName);
+											breaking.colliderScales = ItemToColliders(grandchildItem);
+											fragments.category[i].child[j].grandchild.Add(new GrandchildrenData(breaking));
+											idCount++;
+											
+											for (int n = 0; n < grandchildItem.childCount; n++)
+												{
+													greatGrandchildItem = grandchildItem.GetChild(n);
+													breaking.name = greatGrandchildItem.name;
+													breaking.parent = grandchildItem.name;
+													breaking.treeID = idCount;
+													breaking.prefabData  = ItemToPrefab(greatGrandchildItem, breaking.parent, fragments.monumentName);
+													breaking.colliderScales = ItemToColliders(greatGrandchildItem);
+													fragments.category[i].child[j].grandchild[m].greatgrandchild.Add(new GreatGrandchildrenData(breaking));
+													idCount++;
+
+													for (int o = 0; o < greatGrandchildItem.childCount; o++)
+													{
+														greatgreatGrandchildItem = greatGrandchildItem.GetChild(o);
+														breaking.name = greatgreatGrandchildItem.name;
+														breaking.parent = greatGrandchildItem.name;
+														breaking.treeID = idCount;
+														breaking.prefabData  = ItemToPrefab(greatgreatGrandchildItem, breaking.parent, fragments.monumentName);
+														breaking.colliderScales = ItemToColliders(greatgreatGrandchildItem);
+														fragments.category[i].child[j].grandchild[m].greatgrandchild[n].greatgreatgrandchild.Add(new GreatGreatGrandchildrenData(breaking));
+														idCount++;
+													}
+												
+												}
+												
+										}
+										
+								}
 							}
-						}
+				}
 			}
+		}
+		catch(Exception e)
+		{
+			
+			Debug.LogError(e.Message);
 		}
 		return fragments;
 	}

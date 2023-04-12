@@ -24,11 +24,9 @@ public static class TerrainManager
 
     private static void OnProjectLoad()
     {
-		
 			EditorApplication.update -= OnProjectLoad;
 			FilterTexture = Resources.Load<Texture>("Textures/Brushes/White128");
 			SetTerrainReferences();
-		
     }
     #endregion
 
@@ -563,53 +561,57 @@ public static class TerrainManager
     /// <summary>Sets the TerrainLayer references in TerrainManager to the asset on disk.</summary>
     public static void SetTerrainLayers()
     {
+		
         GroundLayers = GetGroundLayers();
         BiomeLayers = GetBiomeLayers();
         TopologyLayers = GetTopologyLayers();
         AssetDatabase.SaveAssets();
+		
     }
 
     private static TerrainLayer[] GetGroundLayers()
     {
-        TerrainLayer[] textures = new TerrainLayer[8];
-        if (SettingsManager.style)
-		{		
-        textures[0] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Dirt.terrainlayer");
-        textures[0].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/dirt");
-        textures[1] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Snow.terrainlayer");
-        textures[1].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/snow");
-        textures[2] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Sand.terrainlayer");
-        textures[2].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/sand");
-        textures[3] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Rock.terrainlayer");
-        textures[3].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/rock");
-        textures[4] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Grass.terrainlayer");
-        textures[4].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/grass");
-        textures[5] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Forest.terrainlayer");
-        textures[5].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/forest");
-        textures[6] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Stones.terrainlayer");
-        textures[6].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/stones");
-        textures[7] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Gravel.terrainlayer");
-        textures[7].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/gravel");
-		}
-		else
-		{
-		textures[0] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Dirt.terrainlayer");
-        textures[0].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/dirt1");
-        textures[1] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Snow.terrainlayer");
-        textures[1].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/snow1");
-        textures[2] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Sand.terrainlayer");
-        textures[2].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/sand1");
-        textures[3] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Rock.terrainlayer");
-        textures[3].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/rock1");
-        textures[4] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Grass.terrainlayer");
-        textures[4].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/grass1");
-        textures[5] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Forest.terrainlayer");
-        textures[5].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/forest1");
-        textures[6] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Stones.terrainlayer");
-        textures[6].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/stones1");
-        textures[7] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Gravel.terrainlayer");
-        textures[7].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/gravel1");
-		}
+		TerrainLayer[] textures = new TerrainLayer[8];
+
+				if (SettingsManager.style)
+				{		
+				textures[0] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Dirt.terrainlayer");
+				textures[0].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/dirt");
+				textures[1] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Snow.terrainlayer");
+				textures[1].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/snow");
+				textures[2] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Sand.terrainlayer");
+				textures[2].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/sand");
+				textures[3] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Rock.terrainlayer");
+				textures[3].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/rock");
+				textures[4] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Grass.terrainlayer");
+				textures[4].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/grass");
+				textures[5] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Forest.terrainlayer");
+				textures[5].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/forest");
+				textures[6] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Stones.terrainlayer");
+				textures[6].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/stones");
+				textures[7] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Gravel.terrainlayer");
+				textures[7].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground/gravel");
+				}
+				else
+				{
+				textures[0] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Dirt.terrainlayer");
+				textures[0].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/dirt1");
+				textures[1] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Snow.terrainlayer");
+				textures[1].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/snow1");
+				textures[2] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Sand.terrainlayer");
+				textures[2].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/sand1");
+				textures[3] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Rock.terrainlayer");
+				textures[3].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/rock1");
+				textures[4] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Grass.terrainlayer");
+				textures[4].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/grass1");
+				textures[5] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Forest.terrainlayer");
+				textures[5].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/forest1");
+				textures[6] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Stones.terrainlayer");
+				textures[6].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/stones1");
+				textures[7] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground1/Gravel.terrainlayer");
+				textures[7].diffuseTexture = Resources.Load<Texture2D>("Textures/Ground1/gravel1");
+				}
+
 		
         return textures;
     }
@@ -675,24 +677,24 @@ public static class TerrainManager
     /// <param name="layer">The LayerType to change to.</param>
     /// <param name="topology">The Topology layer to change to.</param>
     public static void ChangeLayer(LayerType layer, int topology = -1)
-    {
-        if (layer == LayerType.Alpha)
-            return;
-        if (layer == LayerType.Topology && (topology < 0 || topology >= TerrainTopology.COUNT))
-        {
-            Debug.LogError($"ChangeLayer({layer}, {topology}) topology parameter out of bounds. Should be between 0 - {TerrainTopology.COUNT - 1}");
-            return;
-        }
+    {		
+			if (layer == LayerType.Alpha)
+				return;
+			if (layer == LayerType.Topology && (topology < 0 || topology >= TerrainTopology.COUNT))
+			{
+				Debug.LogError($"ChangeLayer({layer}, {topology}) topology parameter out of bounds. Should be between 0 - {TerrainTopology.COUNT - 1}");
+				return;
+			}
 
-        if (LayerDirty)
-            SaveLayer();
+			if (LayerDirty)
+				SaveLayer();
 
-        CurrentLayerType = layer;
-        TopologyLayerEnum = (TerrainTopology.Enum)TerrainTopology.IndexToType(topology);
-        SetSplatMap(GetSplatMap(layer, topology), layer, topology);
-        ClearSplatMapUndo();
+			CurrentLayerType = layer;
+			TopologyLayerEnum = (TerrainTopology.Enum)TerrainTopology.IndexToType(topology);
+			SetSplatMap(GetSplatMap(layer, topology), layer, topology);
+			ClearSplatMapUndo();
 
-        Callbacks.InvokeLayerChanged(layer, topology);
+			Callbacks.InvokeLayerChanged(layer, topology);
     }
 
     /// <summary>Layer count in layer chosen, used for determining the size of the splatmap array.</summary>

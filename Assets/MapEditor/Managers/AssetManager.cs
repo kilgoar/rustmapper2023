@@ -105,8 +105,8 @@ public static class AssetManager
         if (AssetCache.ContainsKey(filePath))
             return AssetCache[filePath] as GameObject;
 
-        else
-        {
+		else
+		{
             GameObject val = GetAsset<GameObject>(filePath);
             if (val != null)
             {
@@ -152,21 +152,33 @@ public static class AssetManager
 			GameObject.DestroyImmediate(sphere);
 			
 			
+			var prefab = LoadPrefab("");
+			
 			var volumes = File.ReadAllLines(VolumesListPath);
             for (int i = 0; i < volumes.Length; i++)
             {
 				var lineSplit = volumes[i].Split(':');
 				lineSplit[0] = lineSplit[0].Trim(' '); // Volume Mesh Type
 				lineSplit[1] = lineSplit[1].Trim(' '); // Prefab Path
-                switch (lineSplit[0])
-                {
-					case "Cube":
-						LoadPrefab(lineSplit[1]).AddComponent<VolumeGizmo>().mesh = cubeMesh;
-						break;
-					case "Sphere":
-						LoadPrefab(lineSplit[1]).AddComponent<VolumeGizmo>().mesh = sphereMesh;
-						break;
-                }
+                
+				prefab = LoadPrefab(lineSplit[1]);
+				if (prefab.TryGetComponent<VolumeGizmo>(out VolumeGizmo vg))
+				{
+					Debug.LogError("mesh already exists");
+				}
+				else
+				{
+					switch (lineSplit[0])
+					{
+						case "Cube":
+							LoadPrefab(lineSplit[1]).AddComponent<VolumeGizmo>().mesh = cubeMesh;
+							break;
+						case "Sphere":
+							LoadPrefab(lineSplit[1]).AddComponent<VolumeGizmo>().mesh = sphereMesh;
+							break;
+						
+					}
+				}
             }
         }
     }
@@ -634,10 +646,42 @@ public static class AssetManager
 
 			var setLookups = Task.Run(() =>
 			{
+				string[] parse;
+				string name;
+				string monumentTag = "";
 				for (uint i = 0; i < Manifest.pooledStrings.Length; ++i)
 				{
 					IDLookup.Add(Manifest.pooledStrings[i].hash, Manifest.pooledStrings[i].str);
 					PathLookup.Add(Manifest.pooledStrings[i].str, Manifest.pooledStrings[i].hash);
+					
+					monumentTag = "";
+					
+					if(Manifest.pooledStrings[i].str.EndsWith(".prefab"))
+					{
+						if(Manifest.pooledStrings[i].str.Contains("prefabs_large_oilrig"))
+						{
+							monumentTag = "plo#";
+						}
+						else if(Manifest.pooledStrings[i].str.Contains("prefabs_small_oilrig"))
+						{
+							monumentTag = "pso#";
+						}
+						
+						parse = Manifest.pooledStrings[i].str.Split('/');
+						name = parse[parse.Length -1];
+						name = name.Replace(".prefab", "");
+						name = monumentTag + name;
+						
+						try
+						{
+							PrefabLookup.Add(name, Manifest.pooledStrings[i].hash);
+						}
+						catch
+						{
+							
+						}
+					}
+					
 					if (ToID(Manifest.pooledStrings[i].str) != 0)
 						AssetPaths.Add(Manifest.pooledStrings[i].str);
 				}

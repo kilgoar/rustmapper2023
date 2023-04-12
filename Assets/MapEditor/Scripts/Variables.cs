@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.IMGUI.Controls;
+using ProtoBuf;
 
 namespace RustMapEditor.Variables
 {
@@ -196,10 +197,11 @@ namespace RustMapEditor.Variables
 	}
 	
 	[Serializable]
+	[ProtoContract]
 	public struct BreakerPreset
 	{
-		public string title;
-		public MonumentData monument;
+		[ProtoMember(1)]public string title;
+		[ProtoMember(2)]public MonumentData monument;
 	}
 	
 	[Serializable]
@@ -212,48 +214,65 @@ namespace RustMapEditor.Variables
 	//int radius, int gradient, float seafloor, int xOffset, int yOffset, bool perlin, int s
 	
 	[Serializable]
-	public struct Colliders
+	[ProtoContract]
+	public class Colliders
 	{
-		public Vector3 box, sphere, capsule;
+		[ProtoMember(1)]public WorldSerialization.VectorData box = new WorldSerialization.VectorData();
+		[ProtoMember(2)]public WorldSerialization.VectorData sphere = new WorldSerialization.VectorData();
+		[ProtoMember(3)]public WorldSerialization.VectorData capsule = new WorldSerialization.VectorData();
+		
+		public Colliders() { }
+        public Colliders(Vector3 box, Vector3 sphere, Vector3 capsule)
+        {
+            this.box = box;
+			this.sphere = sphere;
+			this.capsule = capsule;
+        }
 	}
 	
 	[Serializable]
+	[ProtoContract]
 	public struct BreakingData
 	{
-		public string name;
-		public uint id;
-		public bool ignore;
-		public int treeID;
-		public Colliders colliderScales;
-		public WorldSerialization.PrefabData prefabData;
-		public string parent;
+		[ProtoMember(1)]public string name;
+		[ProtoMember(2)]public uint id;
+		[ProtoMember(3)]public bool ignore;
+		[ProtoMember(4)]public int treeID;
+		[ProtoMember(5)]public Colliders colliderScales;
+		[ProtoMember(6)]public WorldSerialization.PrefabData prefabData;
+		[ProtoMember(7)]public string parent;
 		
 	}
 	
 	[Serializable]
+	[ProtoContract]
 	public class MonumentData
 	{
-		public List<CategoryData> category = new List<CategoryData>();
-		public string monumentName;
+		[ProtoMember(1)]public List<CategoryData> category = new List<CategoryData>();
+		[ProtoMember(2)]public string monumentName;
 	}
 	
 	[Serializable]
+	[ProtoContract]
 	public class GreatGreatGrandchildrenData
 	{
-		public BreakingData breakingData = new BreakingData();
+		[ProtoMember(1)]public BreakingData breakingData = new BreakingData();
 		
+		public GreatGreatGrandchildrenData(){ }
 		public GreatGreatGrandchildrenData(BreakingData breakingData)
 		{
 			this.breakingData = breakingData;
 		}
 	}
 	
-	[Serializable]
+	[Serializable]	
+	[ProtoContract]
 	public class GreatGrandchildrenData
 	{
-		public BreakingData breakingData = new BreakingData();
-		public List<GreatGreatGrandchildrenData> greatgreatgrandchild = new List<GreatGreatGrandchildrenData>();
+		[ProtoMember(1)]public BreakingData breakingData = new BreakingData();
+		[ProtoMember(2)]public List<GreatGreatGrandchildrenData> greatgreatgrandchild = new List<GreatGreatGrandchildrenData>();
 		
+		public GreatGrandchildrenData(){ }
 		public GreatGrandchildrenData(BreakingData breakingData)
 		{
 			this.breakingData = breakingData;
@@ -261,11 +280,13 @@ namespace RustMapEditor.Variables
 	}
 	
 	[Serializable]
+	[ProtoContract]
 	public class GrandchildrenData
 	{
-		public BreakingData breakingData = new BreakingData();
-		public List<GreatGrandchildrenData> greatgrandchild = new List<GreatGrandchildrenData>();
+		[ProtoMember(1)]public BreakingData breakingData = new BreakingData();
+		[ProtoMember(2)]public List<GreatGrandchildrenData> greatgrandchild = new List<GreatGrandchildrenData>();
 		
+		public GrandchildrenData(){ }
 		public GrandchildrenData(BreakingData breakingData)
 		{
 			this.breakingData = breakingData;
@@ -273,11 +294,13 @@ namespace RustMapEditor.Variables
 	}
 	
 	[Serializable]
+	[ProtoContract]
 	public class ChildrenData
 	{
-		public BreakingData breakingData = new BreakingData();
-		public List<GrandchildrenData> grandchild = new List<GrandchildrenData>();
+		[ProtoMember(1)]public BreakingData breakingData = new BreakingData();
+		[ProtoMember(2)]public List<GrandchildrenData> grandchild = new List<GrandchildrenData>();
 		
+		public ChildrenData(){ }
 		public ChildrenData(BreakingData breakingData)
 		{
 			this.breakingData = breakingData;
@@ -285,11 +308,13 @@ namespace RustMapEditor.Variables
 	}
 	
 	[Serializable]
+	[ProtoContract]
 	public class CategoryData
 	{
-		public BreakingData breakingData = new BreakingData();
-		public List<ChildrenData> child = new List<ChildrenData>();
+		[ProtoMember(1)]public BreakingData breakingData = new BreakingData();
+		[ProtoMember(2)]public List<ChildrenData> child = new List<ChildrenData>();
 		
+		public CategoryData(){ }
 		public CategoryData(BreakingData breakingData)
 		{
 			this.breakingData = breakingData;

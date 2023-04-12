@@ -4,6 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using RustMapEditor.Variables;
+using static BreakerSerialization;
 
 public static class SettingsManager
 {
@@ -45,6 +46,7 @@ public static class SettingsManager
  	public static RustCityPreset city {get; set; }
 	public static BreakerPreset breaker {get; set;}
 	public static FragmentLookup fragmentIDs {get; set;}
+	public static BreakerSerialization breakerSerializer = new BreakerSerialization();
 
     /// <summary>Saves the current EditorSettings to a JSON file.</summary>
     public static void SaveSettings()
@@ -104,11 +106,27 @@ public static class SettingsManager
 	
 	public static void SaveBreakerPreset()
     {
-        using (StreamWriter write = new StreamWriter($"Presets/Breaker/{breaker.title}.json", false))
+		breakerSerializer.breaker = breaker;
+		breakerSerializer.Save($"Presets/Breaker/{breaker.title}.breaker");
+		/*       
+	   using (StreamWriter write = new StreamWriter($"Presets/Breaker/{breaker.title}.breaker", false))
         {
             write.Write(JsonUtility.ToJson(breaker, true));
         }
+		*/
     }
+	
+	public static void LoadBreakerPreset(string filename)
+	{
+		breaker = breakerSerializer.Load($"Presets/Breaker/{filename}.breaker");
+		/*
+		using (StreamReader reader = new StreamReader($"Presets/Breaker/{filename}.breaker"))
+			{
+				
+				breaker = JsonUtility.FromJson<BreakerPreset>(reader.ReadToEnd());
+			}
+		*/
+	}
 	
 	public static void SaveGeologyPreset()
     {
@@ -126,13 +144,7 @@ public static class SettingsManager
         }
     }
 	
-	public static void LoadBreakerPreset(string filename)
-	{
-		using (StreamReader reader = new StreamReader($"Presets/Breaker/{filename}.json"))
-			{
-				breaker = JsonUtility.FromJson<BreakerPreset>(reader.ReadToEnd());
-			}
-	}
+	
 	
 	public static void LoadGeologyPreset(string filename)
 	{

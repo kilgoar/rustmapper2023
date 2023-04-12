@@ -879,6 +879,8 @@ namespace RustMapEditor.UI
 								}
 							if (GUILayout.Button("Load"))
 								{
+									breakerPreset.title = breakerList[presetIndex];
+									
 									if(breakerPreset.title != null)
 									{
 										breakerTree.LoadIcons(icons);
@@ -998,7 +1000,10 @@ namespace RustMapEditor.UI
 							EditorGUILayout.EndHorizontal();
 							
 							PrefabInspector(fragmentData.prefabData);
+							
+							
 							CollidersInspector(ref fragmentData, ref breakerTree);
+							
 						
 					}
 				}
@@ -1107,97 +1112,97 @@ namespace RustMapEditor.UI
 		
 		public static void CollidersInspector(ref BreakingData fragmentData, ref BreakerTreeView breakerTree)
 		{
-			
-			if(fragmentData.colliderScales.box!=Vector3.zero)
-			{
-				fragmentData.colliderScales.box = EditorGUILayout.Vector3Field("Box Scale",fragmentData.colliderScales.box);
-				EditorGUILayout.BeginHorizontal();	
-				if (GUILayout.Button("Apply Box Scale"))
-									
+
+				if(fragmentData.colliderScales.box!=Vector3.zero)
+				{
+					fragmentData.colliderScales.box = EditorGUILayout.Vector3Field("Box Scale",fragmentData.colliderScales.box);
+					EditorGUILayout.BeginHorizontal();	
+					if (GUILayout.Button("Apply Box Scale"))
+										
+										{
+											foreach(int ID in breakerTree.GetSelection())
+											{	
+												fragmentData = breakerTree.fragment[ID];
+												fragmentData.prefabData.scale = fragmentData.colliderScales.box;
+												fragmentData.colliderScales.box = Vector3.zero;
+												breakerTree.fragment[ID] = fragmentData;
+											}
+											breakerTree.Update();
+											breakerTree.Reload();
+										}
+					if (GUILayout.Button("Remove Box Scale"))
+										{
+											foreach(int ID in breakerTree.GetSelection())
+											{	
+												fragmentData = breakerTree.fragment[ID];
+												fragmentData.colliderScales.box = Vector3.zero;
+												breakerTree.fragment[ID] = fragmentData;
+											}
+											breakerTree.Update();
+											breakerTree.Reload();
+										}
+					EditorGUILayout.EndHorizontal();
+				}
+				
+				if(fragmentData.colliderScales.sphere!=Vector3.zero)
+				{
+					fragmentData.colliderScales.sphere = EditorGUILayout.Vector3Field("Sphere Scale", fragmentData.colliderScales.sphere);
+					EditorGUILayout.BeginHorizontal();	
+					if (GUILayout.Button("Apply Sphere Scale"))
 									{
 										foreach(int ID in breakerTree.GetSelection())
-										{	
-											fragmentData = breakerTree.fragment[ID];
-											fragmentData.prefabData.scale = fragmentData.colliderScales.box;
-											fragmentData.colliderScales.box = Vector3.zero;
-											breakerTree.fragment[ID] = fragmentData;
-										}
+											{
+												fragmentData = breakerTree.fragment[ID];
+												fragmentData.prefabData.scale = fragmentData.colliderScales.sphere;
+												fragmentData.colliderScales.sphere = Vector3.zero;
+												breakerTree.fragment[ID] = fragmentData;
+											}
+											breakerTree.Update();
+											breakerTree.Reload();
+									}
+					if (GUILayout.Button("Remove Sphere Scale"))
+									{
+										foreach(int ID in breakerTree.GetSelection())
+											{
+												fragmentData = breakerTree.fragment[ID];
+												fragmentData.colliderScales.sphere = Vector3.zero;
+												breakerTree.fragment[ID] = fragmentData;
+											}
+											breakerTree.Update();
+											breakerTree.Reload();
+									}
+					EditorGUILayout.EndHorizontal();
+				}
+				
+				if(fragmentData.colliderScales.capsule!=Vector3.zero)
+				{				
+					fragmentData.colliderScales.capsule = EditorGUILayout.Vector3Field("Capsule Scale", fragmentData.colliderScales.capsule);
+					EditorGUILayout.BeginHorizontal();	
+					if (GUILayout.Button("Apply Capsule Scale"))
+									{
+										foreach(int ID in breakerTree.GetSelection())
+											{
+												fragmentData = breakerTree.fragment[ID];
+												fragmentData.prefabData.scale = fragmentData.colliderScales.capsule;
+												fragmentData.colliderScales.capsule = Vector3.zero;
+												breakerTree.fragment[ID] = fragmentData;
+											}
 										breakerTree.Update();
 										breakerTree.Reload();
 									}
-				if (GUILayout.Button("Remove Box Scale"))
+					if (GUILayout.Button("Remove Capsule Scale"))
 									{
 										foreach(int ID in breakerTree.GetSelection())
-										{	
-											fragmentData = breakerTree.fragment[ID];
-											fragmentData.colliderScales.box = Vector3.zero;
-											breakerTree.fragment[ID] = fragmentData;
-										}
+											{
+												fragmentData = breakerTree.fragment[ID];
+												fragmentData.colliderScales.capsule = Vector3.zero;
+												breakerTree.fragment[ID] = fragmentData;
+											}
 										breakerTree.Update();
 										breakerTree.Reload();
 									}
-				EditorGUILayout.EndHorizontal();
-			}
-			
-			if(fragmentData.colliderScales.sphere!=Vector3.zero)
-			{
-				fragmentData.colliderScales.sphere = EditorGUILayout.Vector3Field("Sphere Scale", fragmentData.colliderScales.sphere);
-				EditorGUILayout.BeginHorizontal();	
-				if (GUILayout.Button("Apply Sphere Scale"))
-								{
-									foreach(int ID in breakerTree.GetSelection())
-										{
-											fragmentData = breakerTree.fragment[ID];
-											fragmentData.prefabData.scale = fragmentData.colliderScales.sphere;
-											fragmentData.colliderScales.sphere = Vector3.zero;
-											breakerTree.fragment[ID] = fragmentData;
-										}
-										breakerTree.Update();
-										breakerTree.Reload();
-								}
-				if (GUILayout.Button("Remove Sphere Scale"))
-								{
-									foreach(int ID in breakerTree.GetSelection())
-										{
-											fragmentData = breakerTree.fragment[ID];
-											fragmentData.colliderScales.sphere = Vector3.zero;
-											breakerTree.fragment[ID] = fragmentData;
-										}
-										breakerTree.Update();
-										breakerTree.Reload();
-								}
-				EditorGUILayout.EndHorizontal();
-			}
-			
-			if(fragmentData.colliderScales.capsule!=Vector3.zero)
-			{				
-				fragmentData.colliderScales.capsule = EditorGUILayout.Vector3Field("Capsule Scale", fragmentData.colliderScales.capsule);
-				EditorGUILayout.BeginHorizontal();	
-				if (GUILayout.Button("Apply Capsule Scale"))
-								{
-									foreach(int ID in breakerTree.GetSelection())
-										{
-											fragmentData = breakerTree.fragment[ID];
-											fragmentData.prefabData.scale = fragmentData.colliderScales.capsule;
-											fragmentData.colliderScales.capsule = Vector3.zero;
-											breakerTree.fragment[ID] = fragmentData;
-										}
-									breakerTree.Update();
-									breakerTree.Reload();
-								}
-				if (GUILayout.Button("Remove Capsule Scale"))
-								{
-									foreach(int ID in breakerTree.GetSelection())
-										{
-											fragmentData = breakerTree.fragment[ID];
-											fragmentData.colliderScales.capsule = Vector3.zero;
-											breakerTree.fragment[ID] = fragmentData;
-										}
-									breakerTree.Update();
-									breakerTree.Reload();
-								}
-				EditorGUILayout.EndHorizontal();
-			}
+					EditorGUILayout.EndHorizontal();
+				}
 			
 		}
 		

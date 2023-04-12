@@ -4,6 +4,66 @@ using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
 using LZ4;
+using RustMapEditor.Variables;
+
+public class BreakerSerialization
+{
+	public BreakerPreset breaker = new BreakerPreset();
+	
+	[Serializable]
+	[ProtoContract]
+	public class BreakingPreset
+	{
+		[ProtoMember(1)]public string title;
+		[ProtoMember(2)]public MonumentData monument;
+	}
+	
+	public void Save(string fileName)
+    {
+        try
+        {
+            using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                using (var binaryWriter = new BinaryWriter(fileStream))
+                {
+                    
+                    using (var compressionStream = new LZ4Stream(fileStream, LZ4StreamMode.Compress))
+                        Serializer.Serialize(compressionStream, breaker);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+    }
+		
+    public BreakerPreset Load(string fileName)
+    {
+        try
+        {
+            using (var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (var binaryReader = new BinaryReader(fileStream))
+                {
+                    
+                    using (var compressionStream = new LZ4Stream(fileStream, LZ4StreamMode.Decompress))
+					{
+						
+						breaker = Serializer.Deserialize<BreakerPreset>(compressionStream);
+						return breaker;
+					}
+				
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+			return breaker;
+        }
+    }
+}
 
 public class WorldSerialization
 {
