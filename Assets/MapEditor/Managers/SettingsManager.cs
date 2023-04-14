@@ -104,10 +104,10 @@ public static class SettingsManager
     }
 
 	
-	public static void SaveBreakerPreset()
+	public static void SaveBreakerPreset(string filename)
     {
 		breakerSerializer.breaker = breaker;
-		breakerSerializer.Save($"Presets/Breaker/{breaker.title}.breaker");
+		breakerSerializer.Save($"Presets/Breaker/{filename}.breaker");
 		/*       
 	   using (StreamWriter write = new StreamWriter($"Presets/Breaker/{breaker.title}.breaker", false))
         {

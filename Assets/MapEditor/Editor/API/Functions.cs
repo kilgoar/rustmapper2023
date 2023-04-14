@@ -847,44 +847,29 @@ namespace RustMapEditor.UI
 				
 				EditorGUILayout.BeginVertical();
 				
-					
-							breakerPreset.title = EditorGUILayout.TextField("Breaker File", breakerPreset.title);
 							
-							EditorGUI.BeginChangeCheck();
-								
+								//breakerPreset.monument.monumentName = EditorGUILayout.TextField("Breaker File", breakerPreset.monument.monumentName);
+							
 							presetIndex = EditorGUILayout.Popup("Name:", presetIndex, breakerList);
-							
-								
-								if (EditorGUI.EndChangeCheck())
-								{
-									breakerPreset.title = breakerList[presetIndex];
-								}
-							
-							
-							
-							if (EditorGUI.EndChangeCheck())
-							{
-								SettingsManager.breaker = breakerPreset;
-							}
-							
 							
 							
 							EditorGUILayout.BeginHorizontal();
 							if (GUILayout.Button("Save"))
 								{
+									Debug.LogError(breakerPreset.monument.monumentName);
 									SettingsManager.breaker = breakerPreset;
-									SettingsManager.SaveBreakerPreset();
+									SettingsManager.SaveBreakerPreset(breakerPreset.monument.monumentName);
 									SettingsManager.LoadPresets();							
 									breakerList = SettingsManager.GetPresetTitles("Presets/Breaker/");
 								}
 							if (GUILayout.Button("Load"))
 								{
-									breakerPreset.title = breakerList[presetIndex];
 									
-									if(breakerPreset.title != null)
+									
+									if(breakerList[presetIndex] != null)
 									{
 										breakerTree.LoadIcons(icons);
-										SettingsManager.LoadBreakerPreset(breakerPreset.title);	
+										SettingsManager.LoadBreakerPreset(breakerList[presetIndex]);	
 										breakerPreset = SettingsManager.breaker;								
 										PrefabManager.loadFragments(breakerPreset.monument, breakerTree);									
 										breakerList = SettingsManager.GetPresetTitles("Presets/Breaker/");
@@ -917,94 +902,99 @@ namespace RustMapEditor.UI
 				EditorGUILayout.BeginVertical();
 				
 				
-				if (breakerTree != null && breakerTree.fragment.Count > 0)
+				if (breakerTree != null)
 				{
-					if (breakerTree.HasSelection())
+					if (breakerTree.fragment.Count > 0)
 					{
-							if (breakerTree.GetSelection()[0] != oldID)
-							{
-								if (oldID != -1)
+						if (breakerTree.HasSelection())
+						{
+								if (breakerTree.GetSelection()[0] != oldID)
 								{
-									breakerTree.fragment[oldID] = fragmentData;
-								}
-
-
-									fragmentData = breakerTree.fragment[breakerTree.GetSelection()[0]];
-									breakerTree.fragment[breakerTree.GetSelection()[0]] = fragmentData;
-									breakerTree.Update();
-									breakerTree.Reload();
-									oldID = breakerTree.GetSelection()[0];
-							}
-							EditorGUILayout.LabelField("Fragment Inspector", EditorStyles.boldLabel);
-							EditorGUI.BeginChangeCheck();
-							
-							fragmentData.ignore = EditorGUILayout.ToggleLeft("Disable", fragmentData.ignore);
-							
-							EditorGUI.EndChangeCheck();
-							{
-								foreach(int ID in breakerTree.GetSelection())
+									if (oldID != -1)
 									{
-										bool disable = fragmentData.ignore;
-										fragmentData = breakerTree.fragment[ID];
-										fragmentData.ignore = disable;
-										breakerTree.fragment[ID] = fragmentData;
+										breakerTree.fragment[oldID] = fragmentData;
 									}
-										fragmentData = breakerTree.fragment[breakerTree.GetSelection()[0]];
-										breakerTree.Update();
-										breakerTree.Reload();
-										SettingsManager.breaker = breakerPreset;
-							}
-							
-												EditorGUILayout.Space();
 
-					
-					
-				
-							
-							fragmentData.name = EditorGUILayout.TextField("Fragment ", fragmentData.name);
-							
-							EditorGUILayout.BeginHorizontal();
-								
-								fragmentData.prefabData.id = (uint)EditorGUILayout.LongField("ID ", fragmentData.prefabData.id);
-								
-								if (GUILayout.Button("ID to Selection"))
-								{
-									foreach(int ID in breakerTree.GetSelection())
-									{
-										uint id = fragmentData.prefabData.id;
-										fragmentData = breakerTree.fragment[ID];
-										fragmentData.prefabData.id = id;
-										breakerTree.fragment[ID] = fragmentData;
-									}
+
 										fragmentData = breakerTree.fragment[breakerTree.GetSelection()[0]];
-										breakerTree.Update();
-										breakerTree.Reload();
-										SettingsManager.breaker = breakerPreset;
-								}
-								
-								if (GUILayout.Button("Lookup ID"))
-								{
-									foreach(int ID in breakerTree.GetSelection())
-									{
-										fragmentData = breakerTree.fragment[ID];
+										breakerTree.fragment[breakerTree.GetSelection()[0]] = fragmentData;
 										
-										fragmentData.prefabData.id = AssetManager.fragmentToID(breakerTree.fragment[ID].name, breakerTree.fragment[ID].parent, breakerPreset.monument.monumentName);
-										breakerTree.fragment[ID] = fragmentData;
-									}
-									fragmentData = breakerTree.fragment[breakerTree.GetSelection()[0]];
-									breakerTree.Update();
-									breakerTree.Reload();
-									SettingsManager.breaker = breakerPreset;
+										breakerTree.Update();
+										breakerTree.Reload();
+										oldID = breakerTree.GetSelection()[0];
+								}
+								EditorGUILayout.LabelField("Fragment Inspector", EditorStyles.boldLabel);
+								
+								EditorGUI.BeginChangeCheck();
+								
+								fragmentData.ignore = EditorGUILayout.ToggleLeft("Disable", fragmentData.ignore);
+								
+								if(EditorGUI.EndChangeCheck())
+								{
+									foreach(int ID in breakerTree.GetSelection())
+										{
+											bool disable = fragmentData.ignore;
+											fragmentData = breakerTree.fragment[ID];
+											fragmentData.ignore = disable;
+											breakerTree.fragment[ID] = fragmentData;
+										}
+											fragmentData = breakerTree.fragment[breakerTree.GetSelection()[0]];											
+											breakerTree.Update();
+											breakerTree.Reload();
+											SettingsManager.breaker = breakerPreset;
 								}
 								
-							EditorGUILayout.EndHorizontal();
-							
-							PrefabInspector(fragmentData.prefabData);
-							
-							
-							CollidersInspector(ref fragmentData, ref breakerTree);
-							
+													EditorGUILayout.Space();
+
 						
+						
+					
+								
+								fragmentData.name = EditorGUILayout.TextField("Fragment ", fragmentData.name);
+								
+								EditorGUILayout.BeginHorizontal();
+									
+									fragmentData.prefabData.id = (uint)EditorGUILayout.LongField("ID ", fragmentData.prefabData.id);
+									
+									if (GUILayout.Button("ID to Selection"))
+									{
+										foreach(int ID in breakerTree.GetSelection())
+										{
+											uint id = fragmentData.prefabData.id;
+											fragmentData = breakerTree.fragment[ID];
+											fragmentData.prefabData.id = id;
+											breakerTree.fragment[ID] = fragmentData;
+										}
+											fragmentData = breakerTree.fragment[breakerTree.GetSelection()[0]];
+											breakerTree.Update();
+											breakerTree.Reload();
+											SettingsManager.breaker = breakerPreset;
+									}
+									
+									if (GUILayout.Button("Lookup ID"))
+									{
+										foreach(int ID in breakerTree.GetSelection())
+										{
+											fragmentData = breakerTree.fragment[ID];
+											
+											fragmentData.prefabData.id = AssetManager.fragmentToID(breakerTree.fragment[ID].name, breakerTree.fragment[ID].parent, breakerPreset.monument.monumentName);
+											breakerTree.fragment[ID] = fragmentData;
+										}
+										fragmentData = breakerTree.fragment[breakerTree.GetSelection()[0]];
+										breakerTree.Update();
+										breakerTree.Reload();
+										SettingsManager.breaker = breakerPreset;
+									}
+									
+								EditorGUILayout.EndHorizontal();
+								
+								PrefabInspector(fragmentData.prefabData);
+								
+								
+								CollidersInspector(ref fragmentData, ref breakerTree);
+								
+							
+						}
 					}
 				}
 				EditorGUILayout.LabelField("Tree Selector", EditorStyles.boldLabel);

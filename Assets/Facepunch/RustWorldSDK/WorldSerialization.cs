@@ -10,14 +10,7 @@ public class BreakerSerialization
 {
 	public BreakerPreset breaker = new BreakerPreset();
 	
-	[Serializable]
-	[ProtoContract]
-	public class BreakingPreset
-	{
-		[ProtoMember(1)]public string title;
-		[ProtoMember(2)]public MonumentData monument;
-	}
-	
+
 	public void Save(string fileName)
     {
         try
