@@ -1879,7 +1879,7 @@ public static class PrefabManager
 		Debug.LogError(count + " prefabs removed");
 	}
 	
-	public static void SpawnPrefabs(List<BreakingData> fragment)
+	public static void SpawnPrefabs(List<BreakingData> fragment, Transform parent)
         {
 		
 			float adjustZ = 500f;
@@ -1894,7 +1894,7 @@ public static class PrefabManager
 					if (fragment[i].prefabData.id != 0)
 					{
 						fragment[i].prefabData.position -= adjuster;
-						Spawn(Load(fragment[i].prefabData.id), fragment[i].prefabData, GetParent(fragment[i].prefabData.category));	
+						Spawn(Load(fragment[i].prefabData.id), fragment[i].prefabData, parent);	
 						fragment[i].prefabData.position += adjuster;
 					}
 				}

@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 124
+  controlID: 110
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -45,19 +45,19 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1143
+    x: -1649
     y: 73
-    width: 776
-    height: 580
+    width: 748
+    height: 562
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   breakerState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 31020000
+    m_SelectedIDs: 78150000
+    m_LastClickedID: 5496
+    m_ExpandedIDs: 88210000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -94,12 +94,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1143
+    width: 1171
     height: 947
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 104
+  controlID: 82
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -119,12 +119,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1143
-    height: 560
+    width: 1171
+    height: 586
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 105
+  controlID: 133
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -142,8 +142,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 267
-    height: 560
+    width: 275
+    height: 586
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 6}
@@ -172,10 +172,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
+    x: -2820
     y: 73
-    width: 266
-    height: 539
+    width: 274
+    height: 565
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -224,10 +224,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 267
+    x: 275
     y: 0
-    width: 876
-    height: 560
+    width: 896
+    height: 586
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 8}
@@ -257,10 +257,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 267
+    x: -2545
     y: 73
-    width: 874
-    height: 539
+    width: 894
+    height: 565
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -548,9 +548,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0.21643962, y: 0, z: 0, w: 0.976296}
   m_Size:
-    m_Target: 0.75890744
+    m_Target: 303.1089
     speed: 2
-    m_Value: 0.75890744
+    m_Value: 303.1089
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -686,13 +686,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 560
-    width: 1143
-    height: 387
+    y: 586
+    width: 1171
+    height: 361
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 76
+  controlID: 83
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -710,8 +710,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 780
-    height: 387
+    width: 610
+    height: 361
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 13}
@@ -742,9 +742,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: -2820
-    y: 633
-    width: 1097
-    height: 366
+    y: 659
+    width: 609
+    height: 340
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -775,8 +775,8 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 44490000
-    m_LastClickedID: 18756
+    m_SelectedIDs: 46490000
+    m_LastClickedID: 18758
     m_ExpandedIDs: 000000002c490000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -830,9 +830,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: ec480000
-    m_LastClickedInstanceID: 18668
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -882,10 +882,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 633
-    width: 779
-    height: 366
+    x: -2820
+    y: 659
+    width: 609
+    height: 340
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -905,19 +905,103 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 780
+    x: 610
     y: 0
-    width: 363
-    height: 387
+    width: 561
+    height: 361
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
   - {fileID: 16}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &15
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c32f22391fd6904eb272061be337878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Prefab List
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: -2210
+    y: 659
+    width: 559
+    height: 340
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+  treeViewState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 83030000
+    m_LastClickedID: 899
+    m_ExpandedIDs: a3ffffffa4ffffffa5ffffffa6ffffffa7ffffffa8ffffffa9ffffffaaffffffabffffffacffffffadffffffaeffffffafffffffb0ffffffb1ffffffb2ffffffb3ffffffb4ffffffb5ffffffb6ffffffb7fffffffcfffffffdfffffffeffffff
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 0
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: radiation
+  m_MultiColumnHeaderState:
+    m_Columns:
+    - width: 260.7732
+      sortedAscending: 0
+      headerContent:
+        m_Text: Name
+        m_Image: {fileID: 0}
+        m_Tooltip: The name of the prefab.
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 1
+      minWidth: 90
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 95.33896
+      sortedAscending: 0
+      headerContent:
+        m_Text: ID
+        m_Image: {fileID: 0}
+        m_Tooltip: The prefab ID in the Rust game manifest.
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 1
+      minWidth: 60
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    m_VisibleColumns: 0000000001000000
+    m_SortedColumns: 
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -937,18 +1021,18 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 722
-    y: 633
-    width: 419
-    height: 366
+    x: -2210
+    y: 659
+    width: 559
+    height: 340
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   treeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
+    m_SelectedIDs: 77050000
+    m_LastClickedID: 1399
     m_ExpandedIDs: 
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -966,10 +1050,10 @@ MonoBehaviour:
       m_OriginalEventType: 11
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 0}
-    m_SearchString: 
+    m_SearchString: cube
   m_MultiColumnHeaderState:
     m_Columns:
-    - width: 78.07999
+    - width: 113.44
       sortedAscending: 0
       headerContent:
         m_Text: Name
@@ -984,7 +1068,7 @@ MonoBehaviour:
       allowToggleVisibility: 1
       canSort: 1
       userData: 0
-    - width: 78.07999
+    - width: 113.44
       sortedAscending: 0
       headerContent:
         m_Text: Type
@@ -999,7 +1083,7 @@ MonoBehaviour:
       allowToggleVisibility: 1
       canSort: 1
       userData: 0
-    - width: 102.19293
+    - width: 148.47295
       sortedAscending: 0
       headerContent:
         m_Text: Category
@@ -1031,90 +1115,6 @@ MonoBehaviour:
       userData: 0
     m_VisibleColumns: 00000000010000000200000003000000
     m_SortedColumns: 
---- !u!114 &16
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c32f22391fd6904eb272061be337878, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Prefab List
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 780
-    y: 633
-    width: 361
-    height: 366
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-  treeViewState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 35010000
-    m_LastClickedID: 309
-    m_ExpandedIDs: 
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 0
-      m_ClientGUIView: {fileID: 0}
-    m_SearchString: superm
-  m_MultiColumnHeaderState:
-    m_Columns:
-    - width: 133.79991
-      sortedAscending: 0
-      headerContent:
-        m_Text: Name
-        m_Image: {fileID: 0}
-        m_Tooltip: The name of the prefab.
-      contextMenuText: 
-      headerTextAlignment: 0
-      sortingArrowAlignment: 1
-      minWidth: 90
-      maxWidth: 1000000
-      autoResize: 1
-      allowToggleVisibility: 1
-      canSort: 1
-      userData: 0
-    - width: 89.200035
-      sortedAscending: 0
-      headerContent:
-        m_Text: ID
-        m_Image: {fileID: 0}
-        m_Tooltip: The prefab ID in the Rust game manifest.
-      contextMenuText: 
-      headerTextAlignment: 0
-      sortingArrowAlignment: 1
-      minWidth: 60
-      maxWidth: 1000000
-      autoResize: 1
-      allowToggleVisibility: 1
-      canSort: 1
-      userData: 0
-    m_VisibleColumns: 0000000001000000
-    m_SortedColumns: 
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1132,14 +1132,14 @@ MonoBehaviour:
   - {fileID: 19}
   m_Position:
     serializedVersion: 2
-    x: 1143
+    x: 1171
     y: 0
-    width: 777
+    width: 749
     height: 947
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 125
+  controlID: 111
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1157,8 +1157,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 777
-    height: 601
+    width: 749
+    height: 583
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 2}
@@ -1182,9 +1182,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 601
-    width: 777
-    height: 346
+    y: 583
+    width: 749
+    height: 364
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 20}
@@ -1213,10 +1213,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1143
-    y: 674
-    width: 776
-    height: 325
+    x: -1649
+    y: 656
+    width: 748
+    height: 343
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1224,11 +1224,11 @@ MonoBehaviour:
   m_ObjectsLockedBeforeSerialization: []
   m_InstanceIDsLockedBeforeSerialization: 
   m_PreviewResizer:
-    m_CachedPref: 165
+    m_CachedPref: 151
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 91
+  m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

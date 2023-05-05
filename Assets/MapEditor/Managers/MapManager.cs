@@ -520,7 +520,8 @@ public static class MapManager
 		
         public static IEnumerator Load(MapInfo mapInfo, string path = "")
         {
-            ProgressManager.RemoveProgressBars("Load:");
+            
+			ProgressManager.RemoveProgressBars("Load:");
 
             int progressID = Progress.Start("Load: " + path.Split('/').Last(), "Preparing Map", Progress.Options.Sticky);
             int delPrefab = Progress.Start("Prefabs", null, Progress.Options.Sticky, progressID);
@@ -583,7 +584,7 @@ public static class MapManager
             yield return EditorCoroutineUtility.StartCoroutineOwnerless(Load(EmptyMap(size, landHeight), "New Map"));
         }
 		
-			public static IEnumerator SaveCustomPrefab(string path)
+		public static IEnumerator SaveCustomPrefab(string path)
         {
             ProgressManager.RemoveProgressBars("Save:");
 
@@ -595,11 +596,6 @@ public static class MapManager
             Debug.LogError(path);
 			
 			yield return null;
-
-			
-			
-			
-			
             TerrainToCustomPrefab((prefabID, circuitID)).SaveREPrefab(path);
 
             Progress.Report(progressID, 0.99f, "Saved");

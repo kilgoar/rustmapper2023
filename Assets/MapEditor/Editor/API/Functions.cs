@@ -881,7 +881,7 @@ namespace RustMapEditor.UI
 							
 							if (GUILayout.Button("Build"))
 								{
-									PrefabManager.SpawnPrefabs(breakerTree.fragment);
+									PrefabManager.SpawnPrefabs(breakerTree.fragment, GameObject.FindGameObjectWithTag("Prefabs").transform);
 								}
 				
 				if (GUILayout.Button("Import from Prefab"))

@@ -102,6 +102,7 @@ public class MapManagerWindow : EditorWindow
    public void OnGUI()
     {
 		
+		
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, false, false);
         GUIContent[] mainMenu = new GUIContent[6];
         mainMenu[0] = new GUIContent("File");
@@ -114,13 +115,15 @@ public class MapManagerWindow : EditorWindow
         mainMenuOptions = GUILayout.Toolbar(mainMenuOptions, mainMenu, EditorStyles.toolbarButton);
 		
 		Functions.SaveSettings();
+
+	
 		
         #region Menu
         switch (mainMenuOptions)
         {
             #region File
             case 0:
-                Functions.EditorIO();
+				Functions.EditorIO();
 				Functions.NewMapOptions(ref mapSize, ref landHeight, ref layers);
 				Functions.MapInfo();
 				Functions.CustomPrefab();
@@ -133,6 +136,8 @@ public class MapManagerWindow : EditorWindow
                 Functions.EditorLinks();
 				break;
             case 2:
+			
+			
 				GUIContent[] prefabsMenu = new GUIContent[3];
 				prefabsMenu[0] = new GUIContent("Batch Replacer");
 				prefabsMenu[1] = new GUIContent("Prefab Breaker");
@@ -158,6 +163,8 @@ public class MapManagerWindow : EditorWindow
 				break;
             #endregion
             case 3:
+			
+			
             GUIContent[] layersMenu = new GUIContent[4];
             layersMenu[0] = new GUIContent("Ground");
             layersMenu[1] = new GUIContent("Biome");
@@ -172,7 +179,9 @@ public class MapManagerWindow : EditorWindow
 			{
 				Functions.SetLayer((LayerType)layerIndex, TerrainTopology.TypeToIndex((int)layers.Topologies));
 			}
-				
+			
+
+			
 				switch (TerrainManager.CurrentLayerType)
 				{
 					case LayerType.Ground:
@@ -231,6 +240,7 @@ public class MapManagerWindow : EditorWindow
 				}
 				
 			
+
             switch (mapToolsOptions)
             {
 				/*

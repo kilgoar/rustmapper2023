@@ -267,14 +267,15 @@ public static class WorldConverter
 		return refab;
 	}
 	
-		public static WorldSerialization TerrainToCustomPrefab((int prefab, int circuit) ID) 
+	public static WorldSerialization TerrainToCustomPrefab((int prefab, int circuit) ID) 
     {
 		WorldSerialization world = new WorldSerialization();
-		try
+
+			try
 			{
-			
-			
-			world.rePrefab.modifiers = PrefabManager.CurrentModifiers.modifierData;
+				
+			if (PrefabManager.CurrentModifiers?.modifierData!= null)
+				world.rePrefab.modifiers = PrefabManager.CurrentModifiers.modifierData;
 			
 			
 			foreach(NPCDataHolder p in PrefabManager.CurrentMapNPCs)
@@ -284,6 +285,7 @@ public static class WorldConverter
 					world.rePrefab.npcs.bots.Insert(0, p.bots);
 				}
 			}
+			
 			
 			
 			foreach (PrefabDataHolder p in PrefabManager.CurrentMapPrefabs)

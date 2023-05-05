@@ -52,6 +52,7 @@ public static class AssetManager
 
 	public static Dictionary<string, AssetBundle> BundleCache { get; private set; } = new Dictionary<string, AssetBundle>(System.StringComparer.OrdinalIgnoreCase);
 	public static Dictionary<string, Object> AssetCache { get; private set; } = new Dictionary<string, Object>();
+	public static Dictionary<string, GameObject> VolumesCache { get; private set; } = new Dictionary<string, GameObject>();
 	public static Dictionary<string, Texture2D> PreviewCache { get; private set; } = new Dictionary<string, Texture2D>();
 
 	public static List<string> AssetPaths { get; private set; } = new List<string>();
@@ -102,6 +103,7 @@ public static class AssetManager
 
 	public static GameObject LoadPrefab(string filePath)
     {
+		
         if (AssetCache.ContainsKey(filePath))
             return AssetCache[filePath] as GameObject;
 
@@ -139,6 +141,51 @@ public static class AssetManager
         }
     }
 
+	//i can't make this work
+	public static void SetVolumesCache()
+    {
+		if (File.Exists(VolumesListPath))
+        {
+
+		
+			var volumes = File.ReadAllLines(VolumesListPath);
+            for (int i = 0; i < volumes.Length; i++)
+            {
+				var lineSplit = volumes[i].Split(':');
+				lineSplit[0] = lineSplit[0].Trim(' '); // Volume Type
+				lineSplit[1] = lineSplit[1].Trim(' '); // Prefab Path
+				
+				
+				if (AssetCache.ContainsKey(lineSplit[1]))
+				{
+					if(!VolumesCache.ContainsKey(lineSplit[1]))
+					{
+						switch (lineSplit[0])
+						{
+							case "Cube":
+								//VolumesCache.Add(lineSplit[1], (GameObject)AssetCache[lineSplit[1]]);
+								//Resources.Load<GameObject>("Prefabs/TranslucentCube").transform.parent = VolumesCache[lineSplit[1]].transform;
+								
+								 VolumesCache.Add(lineSplit[1], (GameObject)AssetCache[lineSplit[1]]);
+								 GameObject transCube = Resources.Load<GameObject>("Prefabs/TranslucentCube");
+								 GameObject instantiatedTransCube = Object.Instantiate(transCube, VolumesCache[lineSplit[1]].transform);
+                           
+								
+								
+								break;
+							case "Sphere":
+								VolumesCache.Add(lineSplit[1], (GameObject)AssetCache[lineSplit[1]]);
+								break;
+						}
+					}
+				}
+					
+					
+            }
+        }
+	}
+	
+	
 	/// <summary>Adds the volume gizmo component to the prefabs in the VolumesList.</summary>
 	public static void SetVolumeGizmos()
     {
@@ -152,8 +199,6 @@ public static class AssetManager
 			GameObject.DestroyImmediate(sphere);
 			
 			
-			var prefab = LoadPrefab("");
-			
 			var volumes = File.ReadAllLines(VolumesListPath);
             for (int i = 0; i < volumes.Length; i++)
             {
@@ -161,12 +206,15 @@ public static class AssetManager
 				lineSplit[0] = lineSplit[0].Trim(' '); // Volume Mesh Type
 				lineSplit[1] = lineSplit[1].Trim(' '); // Prefab Path
                 
-				prefab = LoadPrefab(lineSplit[1]);
+				var prefab = LoadPrefab(lineSplit[1]);
+				
 				if (prefab.TryGetComponent<VolumeGizmo>(out VolumeGizmo vg))
 				{
 					Debug.LogError("mesh already exists");
 				}
+				
 				else
+					
 				{
 					switch (lineSplit[0])
 					{
@@ -176,7 +224,6 @@ public static class AssetManager
 						case "Sphere":
 							LoadPrefab(lineSplit[1]).AddComponent<VolumeGizmo>().mesh = sphereMesh;
 							break;
-						
 					}
 				}
             }
@@ -514,6 +561,7 @@ public static class AssetManager
 
 			IsInitialised = true; IsInitialising = false;
 			SetVolumeGizmos();
+			//SetVolumesCache();
 			Callbacks.OnBundlesLoaded();
 			PrefabManager.ReplaceWithLoaded(PrefabManager.CurrentMapPrefabs, prefabID);
 		}
@@ -587,20 +635,29 @@ public static class AssetManager
 
 			for (int i = 0; i < bundles.Length; i++)
 			{
-				Progress.Report(ID.bundle, (float)i / bundles.Length, "Loading: " + bundles[i]);
-				var bundlePath = Path.GetDirectoryName(bundleRoot) + Path.DirectorySeparatorChar + bundles[i];
 
-				var asset = AssetBundle.LoadFromFileAsync(bundlePath);
-				while (!asset.isDone)
-					yield return null;
+					
+					Progress.Report(ID.bundle, (float)i / bundles.Length, "Loading: " + bundles[i]);
+					var bundlePath = Path.GetDirectoryName(bundleRoot) + Path.DirectorySeparatorChar + bundles[i];
+					
+					if (!bundlePath.Contains("content.private.bundle"))
+					{
+					
+						AssetBundleCreateRequest asset = null;
+						
+						asset = AssetBundle.LoadFromFileAsync(bundlePath);
+							
+						while (!asset.isDone)
+							yield return null;
 
-				if (asset == null)
-				{
-					Debug.LogError("Couldn't load AssetBundle - " + bundlePath);
-					IsInitialising = false;
-					yield break;
-				}
-				BundleCache.Add(bundles[i], asset.assetBundle);
+						if (asset == null)
+						{
+							Debug.LogError("Couldn't load AssetBundle - " + bundlePath);
+							IsInitialising = false;
+							yield break;
+						}
+						BundleCache.Add(bundles[i], asset.assetBundle);
+					}
 			}
 			rootBundle.Unload(true);
 		}
