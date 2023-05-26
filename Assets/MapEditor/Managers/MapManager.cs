@@ -482,9 +482,9 @@ public static class MapManager
             int spwPrefab = Progress.Start("Prefabs", null, Progress.Options.Sticky, progressID);
 			int spwCircuit = Progress.Start("Circuits", null, Progress.Options.Sticky, progressID);
 			int spwNPCs = Progress.Start("NPCs", null, Progress.Options.Sticky, progressID);
+			yield return null;
 			
-			
-			PrefabManager.DeletePrefabs(PrefabManager.CurrentMapPrefabs, delPrefab);
+			yield return PrefabManager.DeletePrefabs(PrefabManager.CurrentMapPrefabs, delPrefab);
 			PrefabManager.DeleteCircuits(PrefabManager.CurrentMapElectrics);
 			PrefabManager.DeleteNPCs(PrefabManager.CurrentMapNPCs);
 			
@@ -523,7 +523,7 @@ public static class MapManager
             int terrainID = Progress.Start("Terrain", null, Progress.Options.Sticky, progressID);
             yield return null;
 
-            PrefabManager.DeletePrefabs(PrefabManager.CurrentMapPrefabs, delPrefab);
+            yield return PrefabManager.DeletePrefabs(PrefabManager.CurrentMapPrefabs, delPrefab);
             PathManager.DeletePaths(PathManager.CurrentMapPaths, delPath);
             CentreSceneObjects(mapInfo);
             TerrainManager.Load(mapInfo, terrainID);

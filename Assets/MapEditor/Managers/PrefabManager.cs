@@ -295,16 +295,16 @@ public static class PrefabManager
     }
 
     /// <summary>Deletes prefabs from scene.</summary>
-    public static void DeletePrefabs(PrefabDataHolder[] prefabs, int progressID = 0)
+    public static IEnumerator DeletePrefabs(PrefabDataHolder[] prefabs, int progressID = 0)
     {
         if (!IsChangingPrefabs)
-            EditorCoroutineUtility.StartCoroutineOwnerless(Coroutines.DeletePrefabs(prefabs, progressID));
+            yield return EditorCoroutineUtility.StartCoroutineOwnerless(Coroutines.DeletePrefabs(prefabs, progressID));
     }
 	
 	public static void DeleteCircuits(CircuitDataHolder[] circuits, int progressID = 0)
     {
         if (!IsChangingPrefabs)
-            EditorCoroutineUtility.StartCoroutineOwnerless(Coroutines.DeleteCircuits(circuits, progressID));
+           EditorCoroutineUtility.StartCoroutineOwnerless(Coroutines.DeleteCircuits(circuits, progressID));
     }
 	
 	public static void DeleteModifiers(ModifierDataHolder modifiers)
@@ -1959,7 +1959,7 @@ public static class PrefabManager
                     Progress.Report(progressID, (float)i / prefabs.Length, "Spawning Prefabs: " + i + " / " + prefabs.Length);
                     sw.Restart();
                 }
-                Spawn(Load(prefabs[i].id), prefabs[i], GetParent(prefabs[i].category));
+                Spawn(Load(prefabs[i].id), prefabs[i], PrefabParent);
             }
 
             Progress.Report(progressID, 0.99f, "Spawned " + prefabs.Length + " prefabs.");
