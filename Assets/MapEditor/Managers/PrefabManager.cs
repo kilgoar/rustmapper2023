@@ -137,7 +137,7 @@ public static class PrefabManager
             item.cookingOptions = MeshColliderCookingOptions.None;
             item.enabled = false;
             item.isTrigger = false;
-            item.convex = false;
+            item.convex = true;
         }
         foreach (var item in go.GetComponentsInChildren<Animator>())
         {
@@ -174,6 +174,23 @@ public static class PrefabManager
         newObj.GetComponent<PrefabDataHolder>().prefabData = prefabData;
         newObj.SetActive(true);
     }
+	
+	public static void SpawnCustoms(GameObject go, PrefabData prefabData, Transform parent)
+	{
+		GameObject newObj = GameObject.Instantiate(go, parent);
+		newObj.transform.localPosition = new Vector3(prefabData.position.x, prefabData.position.y, prefabData.position.z);
+
+		// Set global rotation
+		newObj.transform.rotation = Quaternion.Euler(new Vector3(prefabData.rotation.x, prefabData.rotation.y, prefabData.rotation.z));
+		// Set rotation relative to parent
+		newObj.transform.localRotation = Quaternion.Euler(new Vector3(prefabData.rotation.x, prefabData.rotation.y, prefabData.rotation.z));
+
+		newObj.transform.localScale = new Vector3(prefabData.scale.x, prefabData.scale.y, prefabData.scale.z);
+		newObj.name = go.name;
+		newObj.GetComponent<PrefabDataHolder>().prefabData = prefabData;
+		newObj.SetActive(true);
+	}
+	
 
     /// <summary>Spawns a prefab and parents to the selected transform.</summary>
     public static void Spawn(GameObject go, Transform transform, string name)
@@ -347,19 +364,29 @@ public static class PrefabManager
         PrefabParent.gameObject.GetComponent<LockObject>().UpdateTransform();
     }
 
-		public static void placeCustomPrefab(string loadPath,Vector3 position, Vector3 rotation, Vector3 scale, Transform parent = null)
+	public static void placeCustomPrefab(string loadPath,Vector3 position, Vector3 rotation, Vector3 scale, Transform parent = null)
 	{
 			var world = new WorldSerialization();
             world.LoadREPrefab(loadPath);
 			
-
-			
 			GameObject newObj = new GameObject(loadPath);
+			
+			string baseName = loadPath.Split('\\').Last().Split('.')[0];
+			string newObjName = baseName + "" + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10);
+
+			while(PrefabManager.PrefabCategories.ContainsKey(newObjName)) 
+			{
+				newObjName = baseName + " " + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10);
+			}
+
+			PrefabManager.PrefabCategories.Add(newObjName, newObj.transform);
+			newObj.name = newObjName;
+		
+			
 			newObj.transform.parent = parent;
 			newObj.transform.localPosition = position;
-			newObj.transform.rotation = Quaternion.Euler(rotation);
+			newObj.transform.localRotation = Quaternion.Euler(rotation);
 			newObj.transform.localScale = scale;
-			newObj.name = loadPath;
 			
 			
 			MapManager.MergeOffsetREPrefab(WorldConverter.WorldToREPrefab(world), newObj.transform, loadPath);
@@ -1957,7 +1984,15 @@ public static class PrefabManager
                 }
                 GameObject.DestroyImmediate(prefabs[i].gameObject);
             }
-
+			
+			List<GameObject> children = new List<GameObject>();
+			foreach (Transform child in PrefabParent)
+			{
+				children.Add(child.gameObject);
+			}
+			children.ForEach(child => GameObject.DestroyImmediate(child));
+			
+			
             Progress.Report(progressID, 0.99f, "Deleted " + prefabs.Length + " prefabs.");
             Progress.Finish(progressID, Progress.Status.Succeeded);
         }
@@ -2022,7 +2057,7 @@ public static class PrefabManager
                     sw.Restart();
                 }
 				
-                Spawn(Load(prefabs[i].id), prefabs[i], parent);
+                SpawnCustoms(Load(prefabs[i].id), prefabs[i], parent);
             }
             Progress.Report(progressID, 0.99f, "Spawned " + prefabs.Length + " prefabs.");
             Progress.Finish(progressID, Progress.Status.Succeeded);

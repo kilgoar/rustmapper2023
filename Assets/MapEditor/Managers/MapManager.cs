@@ -431,16 +431,7 @@ public static class MapManager
 	
 	public static void MergeOffsetREPrefab(MapInfo mapInfo, Transform parent, string loadPath = "")
     {
-		
-		GameObject obj = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PrefabCategory"), PrefabManager.PrefabParent, false);
-		
-		obj.name = loadPath.Split('/').Last().Split('.')[0] + " " + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10) + UnityEngine.Random.Range(0,10);
-		
-		if (!PrefabManager.PrefabCategories.ContainsKey(obj.name))
-			PrefabManager.PrefabCategories.Add(obj.name, obj.transform);
-		else
-			Debug.LogError("duplicate custom prefab name");
-		
+
 		int progressID = Progress.Start("Load: " + loadPath.Split('/').Last(),  "Preparing Map", Progress.Options.Sticky);
 		int spwPrefab = Progress.Start("Prefabs", null, Progress.Options.Sticky, progressID);
         //int spwCircuit = Progress.Start("Circuits", null, Progress.Options.Sticky, progressID);
@@ -455,6 +446,7 @@ public static class MapManager
 		string name = path.Split('/').Last().Split('.')[0];
 		PrefabManager.RenamePrefabCategories(PrefabManager.CurrentMapPrefabs, ":" + name + "::");
 		PrefabManager.RenameNPCs(PrefabManager.CurrentMapNPCs, ":" + name + "::");
+		Debug.LogError("saving custom prefab");
         EditorCoroutineUtility.StartCoroutineOwnerless(Coroutines.SaveCustomPrefab(path));
     }
 

@@ -1706,22 +1706,23 @@ namespace RustMapEditor.UI
 								}
 						
 							geologyItem.custom = EditorGUILayout.ToggleLeft("Custom", geologyItem.custom, GUILayout.MaxWidth(100));
+							
+							EditorGUI.BeginChangeCheck();
+							
 							if(!geologyItem.custom)
 							{
 								geologyItem.prefabID = (uint)EditorGUILayout.LongField("Prefab ID", geologyItem.prefabID);
 							}
 							else
-							{
-								EditorGUI.BeginChangeCheck();
-								
+							{	
 									customPrefabIndex = EditorGUILayout.Popup("Custom Folders:", customPrefabIndex, customPrefabList);
-								
-								if (EditorGUI.EndChangeCheck())
+							}
+							
+							if (EditorGUI.EndChangeCheck())
 								{
 									geologyItem.customPrefab = customPrefabList[customPrefabIndex];
 								}
-								
-							}
+							
 							geologyItem.emphasis = EditorGUILayout.IntField("Weight", geologyItem.emphasis);
 
 						EditorGUILayout.EndHorizontal();
