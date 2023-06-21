@@ -293,7 +293,8 @@ public static class WorldConverter
 			{
 				if (p.prefabData != null)
 				{
-					p.AlwaysBreakPrefabs(); // Updates the prefabdata before saving.
+					p.UpdatePrefabData();
+					//p.AlwaysBreakPrefabs(); // Updates the prefabdata before saving.
 					world.rePrefab.prefabs.Add(p.prefabData);
 				}
 			}

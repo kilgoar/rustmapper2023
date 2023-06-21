@@ -53,7 +53,10 @@ public class PrefabDataHolder : MonoBehaviour
 		prefabData.position = gameObject.transform.position - PrefabManager.PrefabParent.position;
 		prefabData.rotation = gameObject.transform.rotation.eulerAngles;
 		prefabData.scale = gameObject.transform.lossyScale;
-		prefabData.category = "decor";
+		
+		prefabData.category = prefabData.category.Contains(":") ? "decor" : prefabData.category;
+		
+		
         //prefabData.position = gameObject.transform.position - PrefabManager.PrefabParent.position;
         //prefabData.rotation = transform.rotation;
         //prefabData.scale = transform.localScale;
